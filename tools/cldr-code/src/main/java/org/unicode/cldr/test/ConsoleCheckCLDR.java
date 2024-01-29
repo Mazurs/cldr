@@ -344,6 +344,8 @@ public class ConsoleCheckCLDR {
      * @throws Throwable
      */
     public static void main(String[] args) throws Throwable {
+        // turn off logging to not mess up html and other output.
+        CheckCLDR.setLoggerLevel(java.util.logging.Level.OFF);
         MyOptions.parse(args, true);
         ElapsedTimer totalTimer = new ElapsedTimer();
         UOption.parseArgs(args, options);
@@ -479,8 +481,8 @@ public class ConsoleCheckCLDR {
         Factory cldrFactory =
                 SimpleFactory.make(sourceDirectories, factoryFilter)
                         .setSupplementalDirectory(new File(CLDRPaths.SUPPLEMENTAL_DIRECTORY));
-        TestCache testCache = new TestCache(); // for parallelism
-        testCache.setFactory(cldrFactory, checkFilter);
+        final TestCache testCache = cldrFactory.getTestCache();
+        testCache.setNameMatcher(checkFilter);
 
         {
             // we create an extraneous CompoundCheckCLDR here just to check the filters

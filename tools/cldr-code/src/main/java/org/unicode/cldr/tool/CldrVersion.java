@@ -14,7 +14,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import org.unicode.cldr.util.CLDRFile;
 import org.unicode.cldr.util.CLDRPaths;
-import org.unicode.cldr.util.SupplementalDataInfo;
 
 /**
  * Enums that should exactly match what is in cldr-archive; eg, v2_0_1 means that there is a folder
@@ -68,6 +67,7 @@ public enum CldrVersion {
     v42_0,
     v43_0,
     v44_0,
+    v44_1,
     /**
      * @see CLDRFile#GEN_VERSION
      */
@@ -139,9 +139,8 @@ public enum CldrVersion {
         } else {
             dotName = oldName;
             baseDirectory = CLDRPaths.BASE_DIRECTORY;
-            SupplementalDataInfo sdi = SupplementalDataInfo.getInstance();
-            versionInfo =
-                    "baseline".equals(oldName) ? sdi.getCldrVersion() : VersionInfo.getInstance(0);
+            final VersionInfo cldrVersion = VersionInfo.getInstance(CLDRFile.GEN_VERSION);
+            versionInfo = "baseline".equals(oldName) ? cldrVersion : VersionInfo.getInstance(0);
         }
     }
 
